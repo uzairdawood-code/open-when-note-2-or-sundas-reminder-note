@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Open When You Need a Reminder</title>
+    <!-- Tailwind CSS for modern styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600&family=Playfair+Display:ital,wght@0,600;1,400&display=swap');
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+
+        .serif-font {
+            font-family: 'Playfair Display', serif;
+        }
+
+        /* 3D Box & Lid Animations */
+        .box-container {
+            perspective: 1000px;
+        }
+
+        .box-lid {
+            transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+            transform-origin: top;
+        }
+
+        .box-open .box-lid {
+            transform: rotateX(-110deg);
+        }
+
+        /* Letter Slide-Out Animation */
+        .letter {
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+            transform: translateY(20px) scale(0.95);
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .box-open .letter {
+            transform: translateY(-85px) scale(1);
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        /* Pulsing Glow for Lock */
+        @keyframes pulseGlow {
+            0%, 100% { box-shadow: 0 0 15px rgba(234, 179, 8, 0.4); }
+            50% { box-shadow: 0 0 30px rgba(234, 179, 8, 0.8); }
+        }
+
+        .pulse-lock {
+            animation: pulseGlow 2s infinite;
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-rose-950 via-rose-900 to-slate-900 min-h-screen flex flex-col items-center justify-center p-4 overflow-x-hidden">
+
+    <!-- Header Instruction -->
+    <div class="text-center mb-8 z-10 transition-all duration-500" id="instructionHeader">
+        <span class="inline-block px-4 py-1.5 rounded-full bg-rose-900/60 border border-rose-700/50 text-rose-200 text-xs sm:text-sm font-medium tracking-wide mb-3 shadow-inner">
+            Open When Note #2
+        </span>
+        <h1 class="serif-font text-2xl sm:text-4xl text-rose-100 font-semibold px-4">
+            Open when you just want a reminder of how proud I am of you.
+        </h1>
+        <p class="text-rose-300/80 text-xs sm:text-sm mt-2">Tap the golden lock below to open your keepsake box</p>
+    </div>
+
+    <!-- Main Box Scene -->
+    <div class="box-container relative w-72 sm:w-80 h-80 flex flex-col items-center justify-end cursor-pointer" onclick="openBox()" id="boxScene">
+        
+        <!-- Sliding Letter (Hidden inside box initially) -->
+        <div id="letterCard" class="letter absolute z-20 w-80 sm:w-96 bg-gradient-to-b from-amber-50 to-white text-slate-800 p-6 sm:p-8 rounded-2xl shadow-2xl border border-amber-200/80">
+            <div class="flex justify-between items-center border-b border-rose-100 pb-3 mb-4">
+                <span class="text-xs uppercase tracking-widest text-rose-500 font-semibold">For My Jan Sundas</span>
+                <span class="text-rose-400 text-sm">❤️</span>
+            </div>
+            
+            <div class="space-y-3 text-sm sm:text-base leading-relaxed text-slate-700 font-light">
+                <p class="serif-font italic text-rose-900 font-normal">My dearest Sundas,</p>
+                <p>If you opened this up right now, I hope it brings a warm smile to your face. I want you to pause for just a second and look at everything you are accomplishing.</p>
+                <p>Between your nursing studies and your demanding schedule at MTI BKMC, you pour so much dedication, intelligence, and genuine heart into helping others. I see how hard you work every single day, and I am endlessly proud of the incredible woman and nurse you are becoming.</p>
+                <p>Never forget how capable you are. Whatever challenge comes your way, you always rise above it with grace.</p>
+            </div>
+
+            <div class="mt-6 pt-4 border-t border-rose-100 flex justify-between items-center">
+                <span class="serif-font text-rose-800 font-semibold text-sm">Always in your corner,</span>
+                <span class="serif-font text-rose-900 font-bold text-base tracking-wide">Uzair</span>
+            </div>
+        </div>
+
+        <!-- Box Body -->
+        <div class="relative w-64 sm:w-72 h-52 bg-gradient-to-r from-rose-900 via-rose-800 to-rose-950 rounded-b-2xl shadow-2xl border-t-4 border-rose-950 flex items-center justify-center">
+            <!-- Ribbon Vertical -->
+            <div class="absolute inset-y-0 w-10 bg-gradient-to-r from-amber-400 via-amber-300 to-amber-500 shadow-md"></div>
+            <!-- Ribbon Horizontal -->
+            <div class="absolute inset-x-0 h-10 bg-gradient-to-b from-amber-400 via-amber-300 to-amber-500 shadow-md"></div>
+            
+            <!-- Golden Heart Lock -->
+            <div id="lockBadge" class="relative z-30 w-14 h-14 bg-gradient-to-br from-amber-300 via-yellow-400 to-amber-600 rounded-full flex items-center justify-center shadow-lg border-2 border-amber-200 pulse-lock">
+                <span class="text-rose-950 text-xl font-bold select-none">🔒</span>
+            </div>
+        </div>
+
+        <!-- Box Lid -->
+        <div id="boxLid" class="box-lid absolute top-28 w-68 sm:w-76 h-16 bg-gradient-to-r from-rose-950 via-rose-900 to-rose-950 rounded-t-xl shadow-lg border-b-2 border-rose-950 flex items-center justify-center">
+            <!-- Ribbon on Lid -->
+            <div class="absolute inset-x-0 h-6 bg-gradient-to-b from-amber-400 via-amber-300 to-amber-500 shadow-sm"></div>
+            <div class="absolute w-10 inset-y-0 bg-gradient-to-r from-amber-400 via-amber-300 to-amber-500 shadow-sm"></div>
+        </div>
+    </div>
+
+    <!-- Replay / Close Prompt Button (Shows after opening) -->
+    <button id="resetBtn" onclick="resetBox(event)" class="mt-12 hidden px-6 py-2.5 rounded-full bg-rose-900/80 hover:bg-rose-800 border border-rose-700 text-rose-100 text-xs sm:text-sm font-medium transition-all shadow-lg z-30">
+        Close Box ↺
+    </button>
+
+    <script>
+        let isOpen = false;
+
+        function openBox() {
+            if (isOpen) return;
+            isOpen = true;
+
+            const boxScene = document.getElementById('boxScene');
+            const lockBadge = document.getElementById('lockBadge');
+            const instructionHeader = document.getElementById('instructionHeader');
+            const resetBtn = document.getElementById('resetBtn');
+
+            // Change lock icon to unlocked
+            lockBadge.innerHTML = '🔓';
+            lockBadge.classList.remove('pulse-lock');
+
+            // Trigger open class
+            boxScene.classList.add('box-open');
+
+            // Fade out header slightly & show reset button
+            instructionHeader.style.opacity = '0.4';
+            setTimeout(() => {
+                resetBtn.classList.remove('hidden');
+            }, 600);
+        }
+
+        function resetBox(event) {
+            event.stopPropagation();
+            isOpen = false;
+
+            const boxScene = document.getElementById('boxScene');
+            const lockBadge = document.getElementById('lockBadge');
+            const instructionHeader = document.getElementById('instructionHeader');
+            const resetBtn = document.getElementById('resetBtn');
+
+            // Reset lock icon
+            lockBadge.innerHTML = '🔒';
+            lockBadge.classList.add('pulse-lock');
+
+            // Remove open class
+            boxScene.classList.remove('box-open');
+
+            // Restore header & hide reset button
+            instructionHeader.style.opacity = '1';
+            resetBtn.classList.add('hidden');
+        }
+    </script>
+</body>
+</html>
