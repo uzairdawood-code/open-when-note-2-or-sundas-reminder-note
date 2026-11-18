@@ -31,16 +31,18 @@
             transform: rotateX(-110deg);
         }
 
-        /* Letter Slide-Out Animation */
+        /* Letter Slide-Out Animation with Scroll & Proper Spacing */
         .letter {
             transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
             transform: translateY(20px) scale(0.95);
             opacity: 0;
             pointer-events: none;
+            max-height: 60vh;
+            overflow-y: auto;
         }
 
         .box-open .letter {
-            transform: translateY(-85px) scale(1);
+            transform: translateY(-130px) scale(1);
             opacity: 1;
             pointer-events: auto;
         }
@@ -73,8 +75,8 @@
     <div class="box-container relative w-72 sm:w-80 h-80 flex flex-col items-center justify-end cursor-pointer" onclick="openBox()" id="boxScene">
         
         <!-- Sliding Letter (Hidden inside box initially) -->
-        <div id="letterCard" class="letter absolute z-20 w-80 sm:w-96 bg-gradient-to-b from-amber-50 to-white text-slate-800 p-6 sm:p-8 rounded-2xl shadow-2xl border border-amber-200/80">
-            <div class="flex justify-between items-center border-b border-rose-100 pb-3 mb-4">
+        <div id="letterCard" class="letter absolute z-20 w-84 sm:w-98 bg-gradient-to-b from-amber-50 to-white text-slate-800 p-6 sm:p-7 rounded-2xl shadow-2xl border border-amber-200/80">
+            <div class="flex justify-between items-center border-b border-rose-100 pb-3 mb-3">
                 <span class="text-xs uppercase tracking-widest text-rose-500 font-semibold">For My Jan Sundas</span>
                 <span class="text-rose-400 text-sm">❤️</span>
             </div>
@@ -86,9 +88,9 @@
                 <p>Never forget how capable you are kho shar ke nashta ne tyara. Whatever challenge comes your way, you always rise above it with grace.</p>
             </div>
 
-            <div class="mt-6 pt-4 border-t border-rose-100 flex justify-between items-center">
+            <div class="mt-5 pt-3 border-t border-rose-100 flex justify-between items-center">
                 <span class="serif-font text-rose-800 font-semibold text-sm">Always in your corner,</span>
-                <span class="serif-font text-rose-900 font-bold text-base tracking-wide">Balaj</span>
+                <span class="serif-font text-rose-900 font-bold text-base tracking-wide">Uzair</span>
             </div>
         </div>
 
